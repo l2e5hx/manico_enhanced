@@ -43,12 +43,9 @@ global IsVisible := false
 global ShowTimer := 0
 global TriggerHeld := false
 
-; ============== 同应用窗口切换配置 ==============
-global SameAppSwitchKey := "-"  ; Alt+- 切换同应用窗口
-
 ; ============== 初始化 ==============
 InitHotkeys()
-InitSameAppSwitch()
+InitSameAppSwitchHotkeys()
 
 InitHotkeys() {
     triggerKey := Config.TriggerKey
@@ -90,31 +87,32 @@ OnTriggerUp(*) {
 }
 
 ; ============== 同应用窗口切换 ==============
-InitSameAppSwitch() {
-    global SameAppSwitchKey
-    Hotkey("!" SameAppSwitchKey, SwitchSameAppWindow)
+; Ctrl+Alt+[应用快捷键] 在同一应用的多个窗口间切换
+InitSameAppSwitchHotkeys() {
+    global AppShortcuts
+
+    for key, appInfo in AppShortcuts {
+        try {
+            fn := SwitchSameAppWindow.Bind(appInfo.exe)
+            Hotkey("^!" key, fn)
+        }
+    }
 }
 
-SwitchSameAppWindow(*) {
+SwitchSameAppWindow(exe, *) {
+    ; 获取该应用的所有窗口
+    windows := GetAllWindowsOfProcess(exe)
+
+    ; 如果没有窗口或只有一个窗口，不需要切换
+    if (windows.Length <= 1)
+        return
+
     ; 获取当前活动窗口
     try {
         activeHwnd := WinGetID("A")
-        if (!activeHwnd)
-            return
-
-        activeExe := WinGetProcessName(activeHwnd)
-        if (!activeExe)
-            return
     } catch {
-        return
+        activeHwnd := 0
     }
-
-    ; 获取同进程的所有窗口
-    windows := GetAllWindowsOfProcess(activeExe)
-
-    ; 如果只有一个窗口，不需要切换
-    if (windows.Length <= 1)
-        return
 
     ; 找到当前窗口在列表中的位置，切换到下一个
     currentIndex := 0
@@ -472,18 +470,18 @@ ShowHelp(*) {
 
     使用方法：
     ─────────────────────────────────
-    1. 按住 Alt 键    显示应用图标
-    2. 按对应按键     切换/启动应用
-    3. 松开 Alt 键    关闭显示
-    4. 按 Esc 键      取消
-    5. 按 Alt+-       在同应用多窗口间切换
+    1. 按住 Alt 键        显示应用图标
+    2. 按对应按键         切换/启动应用
+    3. 松开 Alt 键        关闭显示
+    4. 按 Esc 键          取消
+    5. Ctrl+Alt+按键      在同应用多窗口间切换
 
     功能特点：
     ─────────────────────────────────
     • 横向显示配置的应用图标
     • 图标下方显示快捷键
     • 应用未运行时自动启动
-    • Alt+- 快速切换同应用窗口
+    • Ctrl+Alt+键 切换同应用多窗口
     • 简洁美观的界面
     )"
 
