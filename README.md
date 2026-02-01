@@ -1,6 +1,7 @@
 # Manico Enhanced for Windows
 
 一个类似 macOS Manico 的 Windows 应用快速切换工具，使用 AutoHotkey v2 编写。
+!(2026-02-01_11-28-02.gif)
 
 ## 功能特点
 
