@@ -43,8 +43,12 @@ global IsVisible := false
 global ShowTimer := 0
 global TriggerHeld := false
 
+; ============== 同应用窗口切换配置 ==============
+global SameAppSwitchKey := "``"  ; Alt+` 切换同应用窗口
+
 ; ============== 初始化 ==============
 InitHotkeys()
+InitSameAppSwitch()
 
 InitHotkeys() {
     triggerKey := Config.TriggerKey
@@ -83,6 +87,82 @@ OnTriggerUp(*) {
     if (IsVisible) {
         HideAppSwitcher()
     }
+}
+
+; ============== 同应用窗口切换 ==============
+InitSameAppSwitch() {
+    global SameAppSwitchKey
+    Hotkey("!" SameAppSwitchKey, SwitchSameAppWindow)
+}
+
+SwitchSameAppWindow(*) {
+    ; 获取当前活动窗口
+    try {
+        activeHwnd := WinGetID("A")
+        if (!activeHwnd)
+            return
+
+        activeExe := WinGetProcessName(activeHwnd)
+        if (!activeExe)
+            return
+    } catch {
+        return
+    }
+
+    ; 获取同进程的所有窗口
+    windows := GetAllWindowsOfProcess(activeExe)
+
+    ; 如果只有一个窗口，不需要切换
+    if (windows.Length <= 1)
+        return
+
+    ; 找到当前窗口在列表中的位置，切换到下一个
+    currentIndex := 0
+    for i, hwnd in windows {
+        if (hwnd = activeHwnd) {
+            currentIndex := i
+            break
+        }
+    }
+
+    ; 切换到下一个窗口（循环）
+    nextIndex := currentIndex >= windows.Length ? 1 : currentIndex + 1
+    nextHwnd := windows[nextIndex]
+
+    ActivateWindow(nextHwnd)
+}
+
+GetAllWindowsOfProcess(exe) {
+    windows := []
+    windowList := WinGetList()
+
+    for hwnd in windowList {
+        try {
+            processName := WinGetProcessName(hwnd)
+            if (StrLower(processName) != StrLower(exe))
+                continue
+
+            winTitle := WinGetTitle(hwnd)
+            if (winTitle = "")
+                continue
+
+            ; 检查窗口样式
+            style := WinGetStyle(hwnd)
+            exStyle := WinGetExStyle(hwnd)
+
+            ; 必须可见
+            if !(style & 0x10000000)
+                continue
+
+            ; 跳过工具窗口
+            if (exStyle & 0x80) && !(exStyle & 0x40000)
+                continue
+
+            windows.Push(hwnd)
+        }
+    }
+
+    return windows
 }
 
 ; ============== 查找应用窗口 ==============
@@ -396,12 +476,14 @@ ShowHelp(*) {
     2. 按对应按键     切换/启动应用
     3. 松开 Alt 键    关闭显示
     4. 按 Esc 键      取消
+    5. 按 Alt+`       在同应用多窗口间切换
 
     功能特点：
     ─────────────────────────────────
     • 横向显示配置的应用图标
-    • 图标右上角显示快捷键
+    • 图标下方显示快捷键
     • 应用未运行时自动启动
+    • Alt+` 快速切换同应用窗口
     • 简洁美观的界面
     )"
 
