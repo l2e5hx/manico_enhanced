@@ -112,6 +112,10 @@ global AppShortcuts := Map(
 - 检查 `exe` 进程名是否正确（可在任务管理器中查看）
 - 检查 `path` 路径是否正确
 
+## 开发说明
+
+本项目由 [Claude Code](https://claude.ai/claude-code) 辅助开发。
+
 ## License
 
 MIT License

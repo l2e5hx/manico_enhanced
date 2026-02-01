@@ -113,6 +113,10 @@ If you're unsure of an application's path:
 - Check if the `exe` process name is correct (can be found in Task Manager)
 - Check if the `path` is correct
 
+## Development
+
+This project was developed with assistance from [Claude Code](https://claude.ai/claude-code).
+
 ## License
 
 MIT License
