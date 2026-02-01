@@ -55,10 +55,11 @@ global AppShortcuts := Map(
 
 ```autohotkey
 global AppShortcuts := Map(
-    "i", { exe: "WindowsTerminal.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\wt.exe", icon: "D:\tools\terminal.ico" },
+    "i", { exe: "WindowsTerminal.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\wt.exe", icon: "D:\work\src\tool\manico\terminal.ico" },
     "3", { exe: "explorer.exe", path: "explorer.exe", icon: "C:\Windows\explorer.exe" },
-    "c", { exe: "chrome.exe", path: "C:\Program Files\Google\Chrome\Application\chrome.exe", icon: "C:\Program Files\Google\Chrome\Application\chrome.exe" },
-    "v", { exe: "Code.exe", path: "C:\Program Files\Microsoft VS Code\Code.exe", icon: "C:\Program Files\Microsoft VS Code\Code.exe" },
+    "e", { exe: "Thorium.exe", path: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe", icon: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe" },
+    "q", { exe: "1Password.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\1Password.exe", icon: "C:\Program Files\WindowsApps\Agilebits.1Password_8.12.1.3_x64__amwd9z03whsfe\1Password.exe" },
+    "w", { exe: "idea64.exe", path: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe", icon: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe" },
 )
 ```
 
