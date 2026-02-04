@@ -31,9 +31,7 @@ global AppShortcuts := Map(
     "e", { exe: "Thorium.exe", path: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe", icon: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe" },
     "q", { exe: "1Password.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\1Password.exe", icon: "C:\Program Files\WindowsApps\Agilebits.1Password_8.12.1.3_x64__amwd9z03whsfe\1Password.exe" },
     "w", { exe: "idea64.exe", path: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe", icon: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe" },
-
-
-
+    "p", { exe: "Doubao.exe", path: "C:\Users\Administrator\AppData\Local\Doubao\Application\app\Doubao.exe", icon: "C:\Users\Administrator\AppData\Local\Doubao\Application\app\Doubao.exe" },
 )
 
 
@@ -68,9 +66,13 @@ OnTriggerDown(*) {
         return
 
     TriggerHeld := true
+
+    ; 立即注册应用快捷键，不等待 GUI 显示
+    RegisterAppHotkeys()
+
+    ; GUI 显示仍然可以延迟
     ShowTimer := SetTimer(ShowAppSwitcher, -Config.ShowDelay)
 }
-
 OnTriggerUp(*) {
     global TriggerHeld, ShowTimer, IsVisible
 
@@ -218,7 +220,7 @@ ShowAppSwitcher() {
     }
 
     IsVisible := true
-    RegisterAppHotkeys()
+    ; 移除这里的 RegisterAppHotkeys()，已在 OnTriggerDown 中调用
 }
 
 CreateAppGui() {
