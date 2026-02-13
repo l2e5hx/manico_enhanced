@@ -20,19 +20,39 @@ global Config := {
 }
 
 ; ============== 应用快捷键配置 ==============
-; 格式: "按键", { exe: "进程名.exe", path: "启动路径", icon: "图标路径" }
-; 按键: 在按住触发键时按的键（如 "1", "2", "a", "b" 等）
-; exe: 进程名，用于检测应用是否运行
-; path: 启动路径（如果应用没运行则启动它）
-; icon: 图标文件路径（exe 或 ico 文件）
-global AppShortcuts := Map(
-    "i", { exe: "WindowsTerminal.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\wt.exe", icon: "D:\work\src\tool\manico\terminal.ico" },
-    "3", { exe: "explorer.exe", path: "explorer.exe", icon: "C:\Windows\explorer.exe" },
-    "e", { exe: "Thorium.exe", path: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe", icon: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe" },
-    "q", { exe: "1Password.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\1Password.exe", icon: "C:\Program Files\WindowsApps\Agilebits.1Password_8.12.1.3_x64__amwd9z03whsfe\1Password.exe" },
-    "w", { exe: "idea64.exe", path: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe", icon: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe" },
-    "p", { exe: "Doubao.exe", path: "C:\Users\Administrator\AppData\Local\Doubao\Application\app\Doubao.exe", icon: "C:\Users\Administrator\AppData\Local\Doubao\Application\app\Doubao.exe" },
-)
+; 从 app_shortcuts.conf 加载，格式: key | exe | path | icon
+global AppShortcuts := LoadAppShortcuts(A_ScriptDir "\app_shortcuts.conf")
+
+LoadAppShortcuts(confPath) {
+    shortcuts := Map()
+
+    if (!FileExist(confPath)) {
+        MsgBox("找不到配置文件：" confPath, "错误", "16")
+        return shortcuts
+    }
+
+    loop read confPath {
+        line := Trim(A_LoopReadLine)
+        if (line = "" || SubStr(line, 1, 1) = ";")
+            continue
+
+        parts := StrSplit(line, "|")
+        if (parts.Length < 3)
+            continue
+
+        key  := Trim(parts[1])
+        exe  := Trim(parts[2])
+        path := Trim(parts[3])
+        icon := parts.Length >= 4 ? Trim(parts[4]) : ""
+
+        if (key = "" || exe = "" || path = "")
+            continue
+
+        shortcuts[key] := { exe: exe, path: path, icon: icon }
+    }
+
+    return shortcuts
+}
 
 
 ; ============== 全局变量 ==============
