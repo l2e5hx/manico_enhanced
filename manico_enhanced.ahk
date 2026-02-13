@@ -7,7 +7,7 @@
 global Config := {
     TriggerKey: "LAlt",          ; 触发键：LAlt, RAlt, LCtrl, RCtrl, CapsLock 等
     ShowDelay: 100,              ; 显示延迟（毫秒）
-    Silent: false,               ; 静默模式：true 不显示悬浮框，直接切换
+    Silent: true,               ; 静默模式：true 不显示悬浮框，直接切换
     FontName: "Segoe UI",        ; 字体名称
     BGColor: "202020",           ; 背景颜色
     KeyBGColor: "4a9eff",        ; 快捷键背景色
@@ -68,14 +68,13 @@ InitSameAppSwitchHotkeys()
 InitHotkeys() {
     triggerKey := Config.TriggerKey
 
-    ; 特殊处理 CapsLock
     if (triggerKey = "CapsLock") {
         Hotkey("*CapsLock", OnTriggerDown)
         Hotkey("*CapsLock Up", OnTriggerUp)
         SetCapsLockState("AlwaysOff")
     } else {
-        Hotkey("*" triggerKey, OnTriggerDown)
-        Hotkey("*" triggerKey " Up", OnTriggerUp)
+        Hotkey("~*" triggerKey, OnTriggerDown)
+        Hotkey("~*" triggerKey " Up", OnTriggerUp)
     }
 }
 
@@ -379,7 +378,7 @@ RegisterAppHotkeys() {
     for key, appInfo in AppShortcuts {
         try {
             fn := SwitchOrLaunchApp.Bind(appInfo)
-            Hotkey("*" key, fn, "On")
+            Hotkey("!" key, fn, "On")
         }
     }
 
@@ -390,7 +389,7 @@ UnregisterAppHotkeys() {
     global AppShortcuts
 
     for key, appInfo in AppShortcuts {
-        try Hotkey("*" key, "Off")
+        try Hotkey("!" key, "Off")
     }
 
     try Hotkey("*Escape", "Off")
