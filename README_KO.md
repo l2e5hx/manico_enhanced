@@ -36,32 +36,30 @@ global Config := {
 
 ### 앱 단축키 설정
 
-`AppShortcuts` 설정을 편집하세요:
+`~/.config/app_shortcuts.conf`를 편집하세요（한 줄에 앱 하나）：
 
-```autohotkey
-global AppShortcuts := Map(
-    "키", { exe: "프로세스.exe", path: "실행 경로", icon: "아이콘 경로" },
-)
+```
+; 세미콜론으로 시작하는 줄은 주석
+key | exe | path | icon
 ```
 
 | 필드 | 설명 |
 |------|------|
-| 키 | 트리거 키를 누른 상태에서 누를 키, 예: `"1"`, `"2"`, `"a"`, `"i"` |
-| exe | 프로세스 이름, 앱 실행 여부 감지에 사용 |
+| key  | 트리거 키를 누른 상태에서 누를 키, 예: `1`, `2`, `a`, `i` |
+| exe  | 프로세스 이름, 앱 실행 여부 감지에 사용 |
 | path | 애플리케이션 실행 경로 |
-| icon | 아이콘 파일 경로 (.ico 또는 .exe 파일) |
+| icon | 아이콘 파일 경로 (.ico 또는 .exe 파일), 생략 가능 |
 
 ### 설정 예시
 
-```autohotkey
-global AppShortcuts := Map(
-    "i", { exe: "WindowsTerminal.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\wt.exe", icon: "D:\work\src\tool\manico\terminal.ico" },
-    "3", { exe: "explorer.exe", path: "explorer.exe", icon: "C:\Windows\explorer.exe" },
-    "e", { exe: "Thorium.exe", path: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe", icon: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe" },
-    "q", { exe: "1Password.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\1Password.exe", icon: "C:\Program Files\WindowsApps\Agilebits.1Password_8.12.1.3_x64__amwd9z03whsfe\1Password.exe" },
-    "w", { exe: "idea64.exe", path: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe", icon: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe" },
-)
 ```
+i | WindowsTerminal.exe | C:\Users\YourName\AppData\Local\Microsoft\WindowsApps\wt.exe | D:\path\to\terminal.ico
+3 | explorer.exe | explorer.exe | C:\Windows\explorer.exe
+e | Thorium.exe | C:\Users\YourName\AppData\Local\Thorium\Application\thorium.exe |
+w | idea64.exe | C:\Users\YourName\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe |
+```
+
+편집 후 트레이 아이콘을 우클릭하여 **새로고침**을 선택하면 변경 사항이 적용됩니다.
 
 ## 사용법
 

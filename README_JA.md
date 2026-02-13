@@ -36,32 +36,30 @@ global Config := {
 
 ### アプリショートカット設定
 
-`AppShortcuts` 設定を編集してください：
+`~/.config/app_shortcuts.conf` を編集してください（1行1アプリ）：
 
-```autohotkey
-global AppShortcuts := Map(
-    "キー", { exe: "プロセス名.exe", path: "起動パス", icon: "アイコンパス" },
-)
+```
+; セミコロンで始まる行はコメント
+key | exe | path | icon
 ```
 
 | フィールド | 説明 |
 |------------|------|
-| キー | トリガーキーを押しながら押すキー、例: `"1"`, `"2"`, `"a"`, `"i"` |
-| exe | プロセス名、アプリの起動状態検出に使用 |
+| key  | トリガーキーを押しながら押すキー、例: `1`, `2`, `a`, `i` |
+| exe  | プロセス名、アプリの起動状態検出に使用 |
 | path | アプリケーション起動パス |
-| icon | アイコンファイルパス（.ico または .exe ファイル） |
+| icon | アイコンファイルパス（.ico または .exe ファイル）、省略可 |
 
 ### 設定例
 
-```autohotkey
-global AppShortcuts := Map(
-    "i", { exe: "WindowsTerminal.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\wt.exe", icon: "D:\work\src\tool\manico\terminal.ico" },
-    "3", { exe: "explorer.exe", path: "explorer.exe", icon: "C:\Windows\explorer.exe" },
-    "e", { exe: "Thorium.exe", path: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe", icon: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe" },
-    "q", { exe: "1Password.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\1Password.exe", icon: "C:\Program Files\WindowsApps\Agilebits.1Password_8.12.1.3_x64__amwd9z03whsfe\1Password.exe" },
-    "w", { exe: "idea64.exe", path: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe", icon: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe" },
-)
 ```
+i | WindowsTerminal.exe | C:\Users\YourName\AppData\Local\Microsoft\WindowsApps\wt.exe | D:\path\to\terminal.ico
+3 | explorer.exe | explorer.exe | C:\Windows\explorer.exe
+e | Thorium.exe | C:\Users\YourName\AppData\Local\Thorium\Application\thorium.exe |
+w | idea64.exe | C:\Users\YourName\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe |
+```
+
+編集後、トレイアイコンを右クリックして**再読み込み**を選択すると変更が反映されます。
 
 ## 使用方法
 

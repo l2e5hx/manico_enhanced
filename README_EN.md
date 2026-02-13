@@ -36,32 +36,30 @@ global Config := {
 
 ### App Shortcut Configuration
 
-Edit the `AppShortcuts` configuration:
+Edit `~/.config/app_shortcuts.conf`, one app per line:
 
-```autohotkey
-global AppShortcuts := Map(
-    "key", { exe: "process.exe", path: "launch path", icon: "icon path" },
-)
+```
+; Comment lines start with semicolons
+key | exe | path | icon
 ```
 
 | Field | Description |
 |-------|-------------|
-| key | Key to press while holding the trigger key, e.g., `"1"`, `"2"`, `"a"`, `"i"` |
-| exe | Process name, used to detect if the app is running |
+| key  | Key to press while holding the trigger key, e.g., `1`, `2`, `a`, `i` |
+| exe  | Process name, used to detect if the app is running |
 | path | Application launch path |
-| icon | Icon file path (.ico or .exe file) |
+| icon | Icon file path (.ico or .exe file), can be left empty |
 
 ### Configuration Example
 
-```autohotkey
-global AppShortcuts := Map(
-    "i", { exe: "WindowsTerminal.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\wt.exe", icon: "D:\work\src\tool\manico\terminal.ico" },
-    "3", { exe: "explorer.exe", path: "explorer.exe", icon: "C:\Windows\explorer.exe" },
-    "e", { exe: "Thorium.exe", path: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe", icon: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe" },
-    "q", { exe: "1Password.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\1Password.exe", icon: "C:\Program Files\WindowsApps\Agilebits.1Password_8.12.1.3_x64__amwd9z03whsfe\1Password.exe" },
-    "w", { exe: "idea64.exe", path: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe", icon: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe" },
-)
 ```
+i | WindowsTerminal.exe | C:\Users\YourName\AppData\Local\Microsoft\WindowsApps\wt.exe | D:\path\to\terminal.ico
+3 | explorer.exe | explorer.exe | C:\Windows\explorer.exe
+e | Thorium.exe | C:\Users\YourName\AppData\Local\Thorium\Application\thorium.exe |
+w | idea64.exe | C:\Users\YourName\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe |
+```
+
+After editing, right-click the tray icon and select **Reload** to apply changes.
 
 ## Usage
 
