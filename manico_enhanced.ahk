@@ -378,22 +378,40 @@ SwitchOrLaunchApp(appInfo, *) {
         AppGui := ""
     }
 
-    ; 查找正在运行的应用窗口
-    hwnd := FindAppWindow(exe)
+    ; 获取该应用的所有窗口
+    windows := GetAllWindowsOfProcess(exe)
 
-    if (hwnd) {
-        ; 检查窗口是否已经激活
-        activeHwnd := WinGetID("A")
-        if (activeHwnd = hwnd) {
-            ; 已激活，最小化它
-            WinMinimize(hwnd)
-        } else {
-            ; 未激活，切换到它
-            ActivateWindow(hwnd)
-        }
-    } else {
+    if (windows.Length = 0) {
         ; 应用未运行，启动它
         LaunchAndActivate(path, exe)
+        return
+    }
+
+    ; 找到当前活动窗口在列表中的位置
+    try {
+        activeHwnd := WinGetID("A")
+    } catch {
+        activeHwnd := 0
+    }
+
+    currentIndex := 0
+    for i, hwnd in windows {
+        if (hwnd = activeHwnd) {
+            currentIndex := i
+            break
+        }
+    }
+
+    if (currentIndex = 0) {
+        ; 当前没有该应用的窗口处于激活状态，切换到第一个
+        ActivateWindow(windows[1])
+    } else if (windows.Length = 1) {
+        ; 只有一个窗口且已激活，最小化它
+        WinMinimize(windows[1])
+    } else {
+        ; 有多个窗口，切换到下一个（循环）
+        nextIndex := currentIndex >= windows.Length ? 1 : currentIndex + 1
+        ActivateWindow(windows[nextIndex])
     }
 }
 
