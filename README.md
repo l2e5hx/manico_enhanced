@@ -37,32 +37,30 @@ global Config := {
 
 ### 应用快捷键配置
 
-编辑 `AppShortcuts` 配置：
+编辑 `~/.config/app_shortcuts.conf`，每行一个应用：
 
-```autohotkey
-global AppShortcuts := Map(
-    "按键", { exe: "进程名.exe", path: "启动路径", icon: "图标路径" },
-)
+```
+; 注释行（以分号开头）
+key | exe | path | icon
 ```
 
 | 字段 | 说明 |
 |------|------|
-| 按键 | 按住触发键时按的键，如 `"1"`, `"2"`, `"a"`, `"i"` 等 |
-| exe | 进程名，用于检测应用是否运行 |
+| key  | 按住触发键时按的键，如 `1`, `2`, `a`, `i` 等 |
+| exe  | 进程名，用于检测应用是否运行 |
 | path | 应用启动路径 |
-| icon | 图标文件路径（.ico 或 .exe 文件） |
+| icon | 图标文件路径（.ico 或 .exe 文件），可留空 |
 
 ### 配置示例
 
-```autohotkey
-global AppShortcuts := Map(
-    "i", { exe: "WindowsTerminal.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\wt.exe", icon: "D:\work\src\tool\manico\terminal.ico" },
-    "3", { exe: "explorer.exe", path: "explorer.exe", icon: "C:\Windows\explorer.exe" },
-    "e", { exe: "Thorium.exe", path: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe", icon: "C:\Users\Administrator\AppData\Local\Thorium\Application\thorium.exe" },
-    "q", { exe: "1Password.exe", path: "C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\1Password.exe", icon: "C:\Program Files\WindowsApps\Agilebits.1Password_8.12.1.3_x64__amwd9z03whsfe\1Password.exe" },
-    "w", { exe: "idea64.exe", path: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe", icon: "C:\Users\Administrator\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe" },
-)
 ```
+i | WindowsTerminal.exe | C:\Users\YourName\AppData\Local\Microsoft\WindowsApps\wt.exe | D:\path\to\terminal.ico
+3 | explorer.exe | explorer.exe | C:\Windows\explorer.exe
+e | Thorium.exe | C:\Users\YourName\AppData\Local\Thorium\Application\thorium.exe |
+w | idea64.exe | C:\Users\YourName\AppData\Local\Programs\IntelliJ IDEA\bin\idea64.exe |
+```
+
+修改配置后，右键托盘图标选择**重新加载**即可生效。
 
 ## 使用方法
 
