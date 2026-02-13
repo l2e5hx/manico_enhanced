@@ -21,7 +21,7 @@ global Config := {
 
 ; ============== 应用快捷键配置 ==============
 ; 从 app_shortcuts.conf 加载，格式: key | exe | path | icon
-global AppShortcuts := LoadAppShortcuts(A_ScriptDir "\app_shortcuts.conf")
+global AppShortcuts := LoadAppShortcuts(EnvGet("USERPROFILE") "\.config\app_shortcuts.conf")
 
 LoadAppShortcuts(confPath) {
     shortcuts := Map()
