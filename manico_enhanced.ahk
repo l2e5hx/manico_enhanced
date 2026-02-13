@@ -163,7 +163,18 @@ GetAllWindowsOfProcess(exe) {
     }
 
     ; 按 hwnd 排序，保证每次调用顺序一致（Z-order 会随激活变化）
-    windows.Sort((a, b) => a - b)
+    n := windows.Length
+    loop n - 1 {
+        i := A_Index
+        loop n - i {
+            j := A_Index
+            if (windows[j] > windows[j + 1]) {
+                tmp := windows[j]
+                windows[j] := windows[j + 1]
+                windows[j + 1] := tmp
+            }
+        }
+    }
 
     return windows
 }
