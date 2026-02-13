@@ -7,7 +7,6 @@ A Windows application quick switcher similar to macOS Manico, written in AutoHot
 ## Features
 
 - **Hotkey App Switching** - Hold Alt + corresponding key to quickly switch to a specific application
-- **Same App Window Switching** - Press Ctrl+Alt+[app hotkey] to cycle between multiple windows of the same application
 - **Auto Launch Apps** - Automatically launch and switch to an app if it's not running
 - **Smart Hide** - Press the hotkey again on an active app to minimize the window
 - **Floating Icon Bar** - Hold Alt to display a horizontal icon bar showing all configured apps
@@ -71,7 +70,6 @@ global AppShortcuts := Map(
 3. **Switch Apps** - While holding Alt, press the corresponding shortcut key
 4. **Hide Floating Bar** - Release the Alt key
 5. **Minimize App** - Press the shortcut key again on an active app
-6. **Same App Window Switch** - Press Ctrl+Alt+[app hotkey] to switch between multiple windows of the same app (e.g., Ctrl+Alt+e for multiple browser windows)
 
 ## Auto Start on Boot
 
