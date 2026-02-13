@@ -162,6 +162,9 @@ GetAllWindowsOfProcess(exe) {
         }
     }
 
+    ; 按 hwnd 排序，保证每次调用顺序一致（Z-order 会随激活变化）
+    windows.Sort((a, b) => a - b)
+
     return windows
 }
 
